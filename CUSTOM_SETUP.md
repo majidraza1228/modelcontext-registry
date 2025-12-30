@@ -533,4 +533,166 @@ make clean
 
 ---
 
-**Last Updated:** 2025-12-29
+---
+
+## Configuration Reference
+
+### All Environment Variables
+
+Complete list of configuration options:
+
+```bash
+# Server Settings
+MCP_REGISTRY_SERVER_ADDRESS=:8080
+MCP_REGISTRY_DATABASE_URL=postgres://mcpregistry:mcpregistry@postgres:5432/mcp-registry
+
+# Company Branding
+MCP_REGISTRY_COMPANY_NAME=Your Company Name
+MCP_REGISTRY_COMPANY_ICON_PATH=/static/company-icon.svg
+
+# Custom Package Registries
+MCP_REGISTRY_CUSTOM_REGISTRY_NPM_URL=http://localhost:4873
+MCP_REGISTRY_CUSTOM_REGISTRY_PYPI_URL=http://localhost:8080
+MCP_REGISTRY_CUSTOM_REGISTRY_NUGET_URL=http://localhost:5000/v3/index.json
+
+# Registry Settings
+MCP_REGISTRY_ENABLE_REGISTRY_VALIDATION=false
+MCP_REGISTRY_SEED_FROM=data/seed.json
+
+# Authentication (for development)
+MCP_REGISTRY_ENABLE_ANONYMOUS_AUTH=true
+MCP_REGISTRY_GITHUB_CLIENT_ID=your-github-client-id
+MCP_REGISTRY_GITHUB_CLIENT_SECRET=your-github-client-secret
+MCP_REGISTRY_JWT_PRIVATE_KEY=your-jwt-private-key
+
+# OIDC Settings (optional)
+MCP_REGISTRY_OIDC_ENABLED=true
+MCP_REGISTRY_OIDC_ISSUER=https://accounts.google.com
+MCP_REGISTRY_OIDC_CLIENT_ID=your-oidc-client-id
+MCP_REGISTRY_OIDC_EXTRA_CLAIMS=[{"hd":"yourdomain.com"}]
+MCP_REGISTRY_OIDC_EDIT_PERMISSIONS=*
+MCP_REGISTRY_OIDC_PUBLISH_PERMISSIONS=*
+```
+
+### Environment Variable Priority
+
+1. `.env` file in registry directory (highest priority)
+2. Environment variables set in shell
+3. `docker-compose.yml` environment section
+4. Default values in code (lowest priority)
+
+---
+
+## Advanced Usage
+
+### Using a Custom .env File
+
+Create `registry/.env` instead of editing `docker-compose.yml`:
+
+```bash
+# Create .env file
+cat > registry/.env <<EOF
+MCP_REGISTRY_COMPANY_NAME=Acme Corporation
+MCP_REGISTRY_COMPANY_ICON_PATH=/static/acme-logo.svg
+MCP_REGISTRY_CUSTOM_REGISTRY_NPM_URL=https://npm.acme.com
+MCP_REGISTRY_ENABLE_REGISTRY_VALIDATION=false
+EOF
+
+# Restart
+make dev-down && make dev-compose
+```
+
+### Multiple Server Versions
+
+You can add multiple versions of the same server to seed.json:
+
+```json
+[
+  {
+    "name": "com.example/my-server",
+    "version": "1.0.0",
+    "packages": [...]
+  },
+  {
+    "name": "com.example/my-server",
+    "version": "2.0.0",
+    "packages": [...]
+  }
+]
+```
+
+The registry will show both versions, with users able to select which version to use.
+
+### Environment Variables in Server Definitions
+
+Define required environment variables for your MCP servers:
+
+```json
+{
+  "packages": [{
+    "environmentVariables": [
+      {
+        "name": "API_KEY",
+        "description": "Your API key from https://example.com/keys",
+        "isRequired": true,
+        "isSecret": true
+      },
+      {
+        "name": "LOG_LEVEL",
+        "description": "Logging level (debug, info, warn, error)",
+        "isRequired": false,
+        "isSecret": false
+      }
+    ]
+  }]
+}
+```
+
+---
+
+## Production Deployment
+
+### Security Considerations
+
+Before deploying to production:
+
+1. **Change default credentials:**
+   ```yaml
+   POSTGRES_USER: your-secure-user
+   POSTGRES_PASSWORD: your-secure-password
+   MCP_REGISTRY_JWT_PRIVATE_KEY: generate-a-secure-key
+   ```
+
+2. **Enable registry validation:**
+   ```yaml
+   MCP_REGISTRY_ENABLE_REGISTRY_VALIDATION: true
+   ```
+
+3. **Disable anonymous auth:**
+   ```yaml
+   MCP_REGISTRY_ENABLE_ANONYMOUS_AUTH: false
+   ```
+
+4. **Use external PostgreSQL:**
+   ```yaml
+   MCP_REGISTRY_DATABASE_URL: postgres://user:pass@your-db-host:5432/mcp-registry?sslmode=require
+   ```
+
+5. **Configure proper authentication** (GitHub OAuth or OIDC)
+
+### Using External Databases
+
+To use an external PostgreSQL database:
+
+```yaml
+environment:
+  - MCP_REGISTRY_DATABASE_URL=postgres://user:password@external-host:5432/dbname?sslmode=require
+
+# Remove or comment out the postgres service
+# postgres:
+#   ...
+```
+
+---
+
+**Last Updated:** 2025-12-30
