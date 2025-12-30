@@ -229,8 +229,14 @@ If you see "port is already allocated":
 # Edit registry/docker-compose.yml
 # Change the port mapping:
 ports:
-  - "8081:8080"  # Change 8080 to any available port
+  - "8081:8080"  # Change 8081 to any available port (keep :8080)
 ```
+
+**Need to change ports?** See **[PORT_CONFIGURATION.md](../PORT_CONFIGURATION.md)** for a complete guide on:
+- Changing the registry port (Web UI/API)
+- Changing the PostgreSQL port
+- Handling port conflicts
+- Multiple registry instances
 
 ### Registry Not Starting
 

@@ -8,7 +8,8 @@ This guide explains how to run, configure, and customize your MCP Registry.
 - [Configuration](#configuration)
 - [Adding MCP Servers](#adding-mcp-servers)
 - [Customizing Company Branding](#customizing-company-branding)
-- [Using Podman Instead of Docker](#using-podman-instead-of-docker)
+- [Podman Benefits](#podman-benefits)
+- [Port Configuration](#port-configuration)
 - [Troubleshooting](#troubleshooting)
 
 ---
@@ -298,6 +299,48 @@ This registry is configured to use Podman by default instead of Docker.
 - **Drop-in replacement**: Same commands and workflow as Docker
 
 The Makefile and all scripts have been configured to use `podman-compose` instead of `docker compose`. Everything works the same way - just run `make dev-compose` to start.
+
+---
+
+## Port Configuration
+
+### Changing Ports
+
+To change the registry or PostgreSQL ports, edit `registry/docker-compose.yml`:
+
+**Registry Port (Web UI/API):**
+```yaml
+services:
+  registry:
+    ports:
+      - "8080:8080"  # Change first number to desired port
+```
+
+**PostgreSQL Port:**
+```yaml
+services:
+  postgres:
+    ports:
+      - "5433:5432"  # Change first number to desired port
+```
+
+**Examples:**
+```yaml
+# Use port 3000 for registry
+ports:
+  - "3000:8080"
+
+# Use port 5434 for PostgreSQL
+ports:
+  - "5434:5432"
+```
+
+After changing ports:
+```bash
+make dev-down && make dev-compose
+```
+
+**📖 For detailed port configuration guide, see [PORT_CONFIGURATION.md](../PORT_CONFIGURATION.md)**
 
 ---
 
