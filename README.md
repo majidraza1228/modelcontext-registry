@@ -38,9 +38,9 @@ make dev-compose
 ```
 
 **4. Access:**
-- **Web UI**: http://localhost:8080
-- **API Docs**: http://localhost:8080/docs
-- **Health Check**: http://localhost:8080/v0/health
+- **Web UI**: http://localhost:8081
+- **API Docs**: http://localhost:8081/docs
+- **Health Check**: http://localhost:8081/v0/health
 
 ## 📖 Documentation
 

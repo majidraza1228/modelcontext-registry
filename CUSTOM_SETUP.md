@@ -59,9 +59,9 @@ export PATH=$PATH:$(go env GOPATH)/bin
    ```
 
 3. **Access the registry:**
-   - **Web UI**: http://localhost:8080
-   - **API Documentation**: http://localhost:8080/docs
-   - **Health Check**: http://localhost:8080/v0/health
+   - **Web UI**: http://localhost:8081
+   - **API Documentation**: http://localhost:8081/docs
+   - **Health Check**: http://localhost:8081/v0/health
 
 4. **Stop the registry:**
    ```bash
@@ -313,7 +313,7 @@ To change the registry or PostgreSQL ports, edit `registry/docker-compose.yml`:
 services:
   registry:
     ports:
-      - "8080:8080"  # Change first number to desired port
+      - "8081:8080"  # Currently set to 8081 (change first number if needed)
 ```
 
 **PostgreSQL Port:**
@@ -321,7 +321,7 @@ services:
 services:
   postgres:
     ports:
-      - "5433:5432"  # Change first number to desired port
+      - "5434:5432"  # Currently set to 5434 (change first number if needed)
 ```
 
 **Examples:**
@@ -330,9 +330,9 @@ services:
 ports:
   - "3000:8080"
 
-# Use port 5434 for PostgreSQL
+# Use port 5435 for PostgreSQL
 ports:
-  - "5434:5432"
+  - "5435:5432"
 ```
 
 After changing ports:
@@ -348,14 +348,14 @@ make dev-down && make dev-compose
 
 | Service | URL | Notes |
 |---------|-----|-------|
-| Web UI | http://localhost:8080 | Main registry interface |
-| API v0 | http://localhost:8080/v0 | Legacy API endpoints |
-| API v0.1 | http://localhost:8080/v0.1 | Current stable API |
-| API Docs | http://localhost:8080/docs | OpenAPI documentation |
-| Health | http://localhost:8080/v0/health | Health check endpoint |
-| PostgreSQL | localhost:5433 | Database (mapped from 5432) |
+| Web UI | http://localhost:8081 | Main registry interface |
+| API v0 | http://localhost:8081/v0 | Legacy API endpoints |
+| API v0.1 | http://localhost:8081/v0.1 | Current stable API |
+| API Docs | http://localhost:8081/docs | OpenAPI documentation |
+| Health | http://localhost:8081/v0/health | Health check endpoint |
+| PostgreSQL | localhost:5434 | Database (mapped from 5432) |
 
-**Note:** PostgreSQL is mapped to port 5433 to avoid conflicts with local PostgreSQL instances.
+**Note:** PostgreSQL is mapped to port 5434 to avoid conflicts with local PostgreSQL instances.
 
 ---
 

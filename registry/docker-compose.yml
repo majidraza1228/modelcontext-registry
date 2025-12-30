@@ -29,7 +29,7 @@ services:
       - MCP_REGISTRY_COMPANY_NAME=${MCP_REGISTRY_COMPANY_NAME:-My Company}
       - MCP_REGISTRY_COMPANY_ICON_PATH=${MCP_REGISTRY_COMPANY_ICON_PATH:-/static/company-icon.svg}
     ports:
-      - 8080:8080
+      - 8081:8080
     volumes:
       - ./data:/data:ro
       - ./static:/static:ro
@@ -48,5 +48,5 @@ services:
       interval: 1s
       retries: 30
     ports:
-      - "5433:5432"
+      - "5434:5432"
     restart: "unless-stopped"

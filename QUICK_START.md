@@ -34,11 +34,11 @@ cd registry
 make dev-compose
 ```
 
-**Access the registry at:** http://localhost:8080
+**Access the registry at:** http://localhost:8081
 
 **Important ports:**
-- Web UI: http://localhost:8080
-- PostgreSQL: localhost:5433 (external), 5432 (internal)
+- Web UI: http://localhost:8081
+- PostgreSQL: localhost:5434 (external), 5432 (internal)
 
 ---
 
@@ -212,7 +212,7 @@ podman-compose logs postgres
 make dev-down && make dev-compose
 
 # Check health
-curl http://localhost:8080/v0/health
+curl http://localhost:8081/v0/health
 
 # Run tests
 make check
@@ -268,7 +268,7 @@ podman-compose logs registry | grep -i error
 
 For comprehensive documentation, see:
 - **[CUSTOM_SETUP.md](./CUSTOM_SETUP.md)** - Complete setup and configuration guide
-- **API Reference**: http://localhost:8080/docs (when running)
+- **API Reference**: http://localhost:8081/docs (when running)
 - **Server JSON Schema**: `registry/docs/reference/server-json/`
 
 ---
@@ -279,7 +279,7 @@ For comprehensive documentation, see:
 - ✅ **Configurable branding** (company name and icon)
 - ✅ **Custom package registries** (NPM, PyPI, NuGet)
 - ✅ **Seed data support** for pre-populating servers
-- ✅ **PostgreSQL database** (port 5433 to avoid conflicts)
+- ✅ **PostgreSQL database** (port 5434 to avoid conflicts)
 - ✅ **Complete API** for MCP server discovery
 
 ---
