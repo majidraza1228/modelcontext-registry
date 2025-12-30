@@ -31,7 +31,7 @@ check-schema: ## Check if server.schema.json is in sync with openapi.yaml
 # Test targets
 test-unit: ## Run unit tests with coverage (requires PostgreSQL)
 	@echo "Starting PostgreSQL for unit tests..."
-	@docker compose up -d postgres 2>&1 | grep -v "Pulling\|Pulled\|Creating\|Created\|Starting\|Started" || true
+	@podman-compose up -d postgres 2>&1 | grep -v "Pulling\|Pulled\|Creating\|Created\|Starting\|Started" || true
 	@echo "Waiting for PostgreSQL to be ready..."
 	@sleep 3
 	@echo ""
@@ -46,7 +46,7 @@ test-unit: ## Run unit tests with coverage (requires PostgreSQL)
 	@echo "✅ Coverage report: coverage.html"
 	@go tool cover -func=coverage.out | tail -1
 	@echo ""
-	@docker compose down postgres >/dev/null 2>&1
+	@podman-compose down postgres >/dev/null 2>&1
 	@echo "✅ Tests complete"
 
 test: ## Run unit tests (use 'make test-all' to run all tests)
@@ -98,14 +98,14 @@ ko-build: ## Build registry image using ko (loads into local docker daemon)
 ko-rebuild: ## Rebuild with ko and restart registry container
 	@$(MAKE) ko-build
 	@echo "Restarting registry container..."
-	@docker compose restart registry
+	@podman-compose restart registry
 
-dev-compose: ko-build ## Start development environment with Docker Compose (builds with ko first)
-	@echo "Starting Docker Compose..."
-	docker compose up
+dev-compose: ko-build ## Start development environment with Podman Compose (builds with ko first)
+	@echo "Starting Podman Compose..."
+	podman-compose up
 
 dev-down: ## Stop development environment
-	docker compose down
+	podman-compose down
 
 # Cleanup
 clean: ## Clean build artifacts and coverage files

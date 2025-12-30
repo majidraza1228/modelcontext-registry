@@ -17,7 +17,7 @@ This guide explains how to run, configure, and customize your MCP Registry.
 
 Before running the MCP Registry, ensure you have:
 
-- **Docker** (version 20.10+) or **Podman** (version 4.0+)
+- **Podman** (version 4.0+) and **podman-compose**
 - **Go** (version 1.24.x)
 - **ko** - Container image builder for Go ([installation](https://ko.build/install/))
 - **golangci-lint** (v2.4.0 or later)
@@ -25,6 +25,14 @@ Before running the MCP Registry, ensure you have:
 ### Installing Prerequisites
 
 ```bash
+# Install Podman and podman-compose
+# macOS
+brew install podman podman-compose
+
+# Linux (Ubuntu/Debian)
+sudo apt-get install podman
+pip3 install podman-compose
+
 # Install ko
 go install github.com/google/ko@latest
 
@@ -58,7 +66,7 @@ export PATH=$PATH:$(go env GOPATH)/bin
    ```bash
    make dev-down
    # OR
-   docker compose down
+   podman-compose down
    ```
 
 ---
@@ -279,47 +287,17 @@ make dev-compose
 
 ---
 
-## Using Podman Instead of Docker
+## Podman Benefits
 
-The registry supports Podman as an alternative to Docker.
+This registry is configured to use Podman by default instead of Docker.
 
-### 1. Install Podman Compose
+**Why Podman?**
+- **Rootless by default**: More secure than Docker (no daemon running as root)
+- **Daemonless**: No background service needed
+- **Compatible**: Works with docker-compose.yml files via podman-compose
+- **Drop-in replacement**: Same commands and workflow as Docker
 
-```bash
-# macOS
-brew install podman-compose
-
-# Linux
-pip3 install podman-compose
-
-# Or
-sudo apt-get install podman-compose  # Debian/Ubuntu
-```
-
-### 2. Update Makefile (Optional)
-
-Edit `registry/Makefile` to use `podman-compose`:
-
-```makefile
-dev-compose: ko-build
-	@echo "Starting Podman Compose..."
-	podman-compose up
-
-dev-down:
-	podman-compose down
-```
-
-### 3. Run with Podman
-
-```bash
-# Using make
-make dev-compose
-
-# Or directly
-podman-compose up
-```
-
-**Note:** Podman runs rootless by default, which is more secure than Docker.
+The Makefile and all scripts have been configured to use `podman-compose` instead of `docker compose`. Everything works the same way - just run `make dev-compose` to start.
 
 ---
 
@@ -445,10 +423,10 @@ export PATH=$PATH:$(go env GOPATH)/bin
 **Solution:**
 ```bash
 # Check logs
-docker compose logs registry
+podman-compose logs registry
 
 # Check PostgreSQL
-docker compose logs postgres
+podman-compose logs postgres
 
 # Rebuild from scratch
 make clean
@@ -483,7 +461,7 @@ make dev-compose
 cat registry/data/seed.json | jq .
 
 # Check logs for validation errors
-docker compose logs registry | grep -i error
+podman-compose logs registry | grep -i error
 
 # Verify seed path in docker-compose.yml
 # - MCP_REGISTRY_SEED_FROM=data/seed.json
@@ -522,7 +500,7 @@ registry/
 
 For issues or questions:
 1. Check the [troubleshooting](#troubleshooting) section
-2. Review logs: `docker compose logs`
+2. Review logs: `podman-compose logs`
 3. See the main [README.md](./registry/README.md)
 4. Open an issue on GitHub
 
@@ -538,7 +516,7 @@ make dev-compose
 make dev-down
 
 # View logs
-docker compose logs -f
+podman-compose logs -f
 
 # Rebuild after code changes
 make dev-down && make dev-compose

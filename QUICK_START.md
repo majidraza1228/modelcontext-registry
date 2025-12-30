@@ -2,6 +2,16 @@
 
 ## 🚀 Start the Registry
 
+**Prerequisites:** Install podman-compose first
+```bash
+# macOS
+brew install podman-compose
+
+# Linux
+pip3 install podman-compose
+```
+
+**Start the registry:**
 ```bash
 cd registry
 make dev-compose
