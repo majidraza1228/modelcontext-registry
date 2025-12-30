@@ -1,0 +1,60 @@
+[
+  {
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.example/postgres-server",
+    "description": "PostgreSQL database MCP server for querying and managing PostgreSQL databases.",
+    "repository": {
+      "url": "https://github.com/example/postgres-mcp-server",
+      "source": "github"
+    },
+    "version": "1.0.0",
+    "packages": [
+      {
+        "registryType": "npm",
+        "identifier": "@example/postgres-mcp-server",
+        "version": "1.0.0",
+        "runtimeHint": "npx",
+        "transport": {
+          "type": "stdio"
+        },
+        "environmentVariables": [
+          {
+            "name": "DATABASE_URL",
+            "description": "PostgreSQL connection string (e.g., postgresql://user:password@localhost:5432/dbname)",
+            "isRequired": true,
+            "isSecret": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.example/github-markitdown",
+    "description": "GitHub MCP server with Markitdown integration for converting documents to markdown.",
+    "repository": {
+      "url": "https://github.com/example/github-markitdown-mcp",
+      "source": "github"
+    },
+    "version": "1.0.0",
+    "packages": [
+      {
+        "registryType": "pypi",
+        "identifier": "github-markitdown-mcp",
+        "version": "1.0.0",
+        "runtimeHint": "uvx",
+        "transport": {
+          "type": "stdio"
+        },
+        "environmentVariables": [
+          {
+            "name": "GITHUB_TOKEN",
+            "description": "GitHub personal access token for API authentication",
+            "isRequired": true,
+            "isSecret": true
+          }
+        ]
+      }
+    ]
+  }
+]
