@@ -2,6 +2,8 @@
 
 A customizable, self-hosted Model Context Protocol (MCP) server registry with company branding, custom package registries, and Podman support.
 
+![MCP Registry Screenshot](docs/images/screenshot.png)
+
 ## ✨ Features
 
 - 🏢 **Custom Branding** - Configure your company name and logo
