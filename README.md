@@ -47,6 +47,7 @@ make dev-compose
 - **[QUICK_START.md](./QUICK_START.md)** - Get started in 5 minutes
 - **[CUSTOM_SETUP.md](./CUSTOM_SETUP.md)** - Complete configuration guide
 - **[PORT_CONFIGURATION.md](./PORT_CONFIGURATION.md)** - Change registry and database ports
+- **[PODMAN_ONLY.md](./PODMAN_ONLY.md)** - Run with Podman only (no podman-compose needed)
 
 ## ⚙️ Configuration
 
